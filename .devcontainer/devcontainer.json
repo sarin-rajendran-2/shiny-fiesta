@@ -1,8 +1,8 @@
 {
-	"name": "Elixir, Phoenix, Node.js & PostgresSQL (Community)",
+	"name": "ExIns: (Elixir, Phoenix app & PostgreSQL db)",
 	"dockerComposeFile": "docker-compose.yml",
-	"service": "elixir",
-	"workspaceFolder": "/workspace",
+	"service": "app",
+	"workspaceFolder": "/workspace:cached",
 
 	// Configure tool-specific properties.
 	"customizations": {
@@ -10,8 +10,9 @@
 		"vscode": {
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"jakebecker.elixir-ls",
-				"mhutchie.git-graph"
+				"JakeBecker.elixir-ls",
+				"mhutchie.git-graph",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	},
@@ -21,8 +22,11 @@
 	"forwardPorts": [4000, 4001, 5432],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "mix deps.get"
+	"postCreateCommand": "./.devcontainer/postCreate.sh",
+	"features": {
+		"ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {}
+	}
 
 	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	// "remoteUser": "vscode"
 }
