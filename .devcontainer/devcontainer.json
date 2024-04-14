@@ -12,6 +12,7 @@
 			"extensions": [
 				"JakeBecker.elixir-ls",
 				"mhutchie.git-graph",
+				"msaraiva.surface",
 				"ms-azuretools.vscode-docker"
 			]
 		}
