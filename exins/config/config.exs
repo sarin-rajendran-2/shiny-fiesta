@@ -7,6 +7,9 @@
 # General application configuration
 import Config
 
+config :ash, :custom_types, money: AshMoney.Types.Money
+config :ash, :known_types, [AshMoney.Types.Money]
+
 config :exins,
   ecto_repos: [ExIns.Repo],
   generators: [timestamp_type: :utc_datetime]
