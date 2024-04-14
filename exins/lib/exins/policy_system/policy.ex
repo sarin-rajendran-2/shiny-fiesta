@@ -1,6 +1,11 @@
 defmodule ExIns.PolicySystem.Policy do
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshPostgres.DataLayer,
+    authorizers: [Ash.Policy.Authorizer]
+
+  @doc """
+  Represents an insurance policy.
+  """
 
   actions do
     defaults [:create, :read, :update, :destroy]
@@ -13,18 +18,17 @@ defmodule ExIns.PolicySystem.Policy do
   end
 
   attributes do
-    uuid_primary_key :id
-
-    attribute :policy_number, :string
-    attribute :status, :atom do
-      constraints [one_of: [:quote, :in_force, :cancelled]]
-
-      # The status defaulting to open makes sense
-      default :quote
-
-      # We also don't want status to ever be `nil`
+    attribute :id, :uuid do
+      primary_key? true
       allow_nil? false
+      description "The system generated unique id for the policy record"
     end
+
+    # Embedded resource named `Doc` (PolicyDocument)
+    attribute :doc, ExIns.PolicySystem.PolicyDocument
+
+    create_timestamp :created_at
+    update_timestamp :updated_at
   end
 
   code_interface do
