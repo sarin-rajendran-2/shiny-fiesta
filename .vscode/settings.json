@@ -1,3 +1,4 @@
 {
-    "elixirLS.enableTestLenses": true
+    "elixirLS.enableTestLenses": true,
+    "elixirLS.projectDir": "exins"
 }
