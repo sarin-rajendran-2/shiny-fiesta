@@ -17,7 +17,7 @@ defmodule ExinsWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import ExinsWeb.Gettext
+  use Gettext, backend: ExinsWeb.Gettext
 
   @doc """
   Renders a modal.

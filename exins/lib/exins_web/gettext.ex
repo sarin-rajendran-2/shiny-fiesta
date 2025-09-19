@@ -20,5 +20,5 @@ defmodule ExinsWeb.Gettext do
 
   See the [Gettext Docs](https://hexdocs.pm/gettext) for detailed usage.
   """
-  use Gettext, otp_app: :exins
+  use Gettext.Backend, otp_app: :exins
 end

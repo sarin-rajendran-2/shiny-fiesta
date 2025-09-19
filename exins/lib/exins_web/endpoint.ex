@@ -7,7 +7,7 @@ defmodule ExinsWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_exins_key",
-    signing_salt: "taTwriZu",
+    signing_salt: "mFxZvysL",
     same_site: "Lax"
   ]
 
