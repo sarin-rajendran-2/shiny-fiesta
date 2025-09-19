@@ -28,6 +28,15 @@ services:
     restart: unless-stopped
     volumes:
       - postgres-data-2:/var/lib/postgresql/data
+
+  livebook:
+    environment:
+      - LIVEBOOK_PASSWORD="new passwordW@!"
+    image: ghcr.io/livebook-dev/livebook
+    network_mode: service:db2
+    restart: unless-stopped 
+    volumes:
+      - ..:/data:cached
 volumes:
   postgres-data:
   postgres-data-2:
