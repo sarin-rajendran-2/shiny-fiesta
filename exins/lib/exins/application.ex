@@ -12,8 +12,6 @@ defmodule Exins.Application do
       Exins.Repo,
       {DNSCluster, query: Application.get_env(:exins, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Exins.PubSub},
-      # Start the Finch HTTP client for sending emails
-      {Finch, name: Exins.Finch},
       # Start a worker by calling: Exins.Worker.start_link(arg)
       # {Exins.Worker, arg},
       # Start to serve requests, typically the last entry

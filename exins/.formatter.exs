@@ -1,6 +1,6 @@
 [
-  import_deps: [:ash, :ash_phoenix, :ash_postgres, :ecto, :ecto_sql, :phoenix],
+  import_deps: [:ash_phoenix, :ash, :reactor, :ecto, :ecto_sql, :phoenix],
   subdirectories: ["priv/*/migrations"],
-  plugins: [Phoenix.LiveView.HTMLFormatter, Spark.Formatter],
+  plugins: [Spark.Formatter, Phoenix.LiveView.HTMLFormatter],
   inputs: ["*.{heex,ex,exs}", "{config,lib,test}/**/*.{heex,ex,exs}", "priv/*/seeds.exs"]
 ]

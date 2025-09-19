@@ -1,7 +1,8 @@
 defmodule Exins.PolicySystem.Policy do
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer,
-    authorizers: [Ash.Policy.Authorizer]
+    domain: Exins.PolicySystem,
+    data_layer: AshPostgres.DataLayer
+    # authorizers: [Ash.Policy.Authorizer]
 
   @doc """
   Represents an insurance policy.
@@ -31,15 +32,6 @@ defmodule Exins.PolicySystem.Policy do
 
     create_timestamp :created_at
     update_timestamp :updated_at
-  end
-
-  code_interface do
-    define_for ExIns.PolicySystem
-    define :create, action: :create
-    define :read_all, action: :read
-    define :update, action: :update
-    define :destroy, action: :destroy
-    define :get_by_id, args: [:id], action: :by_id
   end
 
   postgres do

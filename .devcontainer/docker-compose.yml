@@ -1,12 +1,10 @@
-version: "3.9"
-
 services:
   app:
-    image: elixir:1.16
+    image: elixir:1.18
     volumes:
       - ..:/workspace:cached
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:db
+    network_mode: service:db2
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
@@ -21,7 +19,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: exins_dev
 
-db2:
+  db2:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

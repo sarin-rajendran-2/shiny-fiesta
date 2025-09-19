@@ -7,8 +7,42 @@
 # General application configuration
 import Config
 
-config :ash, :custom_types, money: AshMoney.Types.Money
-config :ash, :known_types, [AshMoney.Types.Money]
+config :ash,
+  allow_forbidden_field_for_relationships_by_default?: true,
+  bulk_actions_default_to_errors?: true,
+  custom_types: [money: AshMoney.Types.Money],
+  default_actions_require_atomic?: true,
+  default_page_type: :keyset,
+  include_embedded_source_by_default?: false,
+  keep_read_action_loads_when_loading?: false,
+  known_types: [AshMoney.Types.Money],
+  policies: [no_filter_static_forbidden_reads?: false],
+  read_action_after_action_hooks_in_order?: true,
+  show_keysets_for_all_actions?: false
+
+config :spark,
+  formatter: [
+    remove_parens?: true,
+    "Ash.Resource": [
+      section_order: [
+        :resource,
+        :code_interface,
+        :actions,
+        :policies,
+        :pub_sub,
+        :preparations,
+        :changes,
+        :validations,
+        :multitenancy,
+        :attributes,
+        :relationships,
+        :calculations,
+        :aggregates,
+        :identities
+      ]
+    ],
+    "Ash.Domain": [section_order: [:resources, :policies, :authorization, :domain, :execution]]
+  ]
 
 config :exins,
   ash_domains: [Exins.PolicySystem],
@@ -24,7 +58,7 @@ config :exins, ExinsWeb.Endpoint,
     layout: false
   ],
   pubsub_server: Exins.PubSub,
-  live_view: [signing_salt: "DcI/rCaB"]
+  live_view: [signing_salt: "Jeh0oGc4"]
 
 # Configures the mailer
 #
@@ -37,42 +71,27 @@ config :exins, Exins.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.17.11",
+  version: "0.25.4",
   exins: [
     args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+      ~w(js/app.js --bundle --target=es2022 --outdir=../priv/static/assets/js --external:/fonts/* --external:/images/* --alias:@=.),
     cd: Path.expand("../assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
-  ]
-
-config :spark, :formatter,
-  remove_parens?: true,
-  "Ash.Resource": [
-    type: Ash.Resource,
-    section_order: [
-      :authentication,
-      :token,
-      :attributes,
-      :relationships,
-      :policies,
-      :postgres
-    ]
+    env: %{"NODE_PATH" => [Path.expand("../deps", __DIR__), Mix.Project.build_path()]}
   ]
 
 # Configure tailwind (the version is required)
 config :tailwind,
-  version: "3.4.0",
+  version: "4.1.7",
   exins: [
     args: ~w(
-      --config=tailwind.config.js
-      --input=css/app.css
-      --output=../priv/static/assets/app.css
+      --input=assets/css/app.css
+      --output=priv/static/assets/css/app.css
     ),
-    cd: Path.expand("../assets", __DIR__)
+    cd: Path.expand("..", __DIR__)
   ]
 
 # Configures Elixir's Logger
-config :logger, :console,
+config :logger, :default_formatter,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
