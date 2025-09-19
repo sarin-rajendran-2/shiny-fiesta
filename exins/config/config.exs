@@ -10,6 +10,10 @@ import Config
 config :ash, :custom_types, money: AshMoney.Types.Money
 config :ash, :known_types, [AshMoney.Types.Money]
 
+config :ex_cldr,
+  default_locale: "en",
+  default_backend: Exins.Cldr
+
 config :exins,
   ash_domains: [Exins.PolicySystem],
   ecto_repos: [Exins.Repo],
@@ -45,23 +49,9 @@ config :esbuild,
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
 
-config :spark, :formatter,
-  remove_parens?: true,
-  "Ash.Resource": [
-    type: Ash.Resource,
-    section_order: [
-      :authentication,
-      :token,
-      :attributes,
-      :relationships,
-      :policies,
-      :postgres
-    ]
-  ]
-
 # Configure tailwind (the version is required)
 config :tailwind,
-  version: "3.4.0",
+  version: "3.4.3",
   exins: [
     args: ~w(
       --config=tailwind.config.js

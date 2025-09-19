@@ -18,7 +18,12 @@ defmodule ExinsWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    live "/policies", PoliciesLive
+    live "/policies", PolicyLive.Index, :index
+    live "/policies/new", PolicyLive.Index, :new
+    live "/policies/:id/edit", PolicyLive.Index, :edit
+
+    live "/policies/:id", PolicyLive.Show, :show
+    live "/policies/:id/show/edit", PolicyLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
