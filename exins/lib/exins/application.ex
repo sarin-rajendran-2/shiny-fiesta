@@ -1,4 +1,4 @@
-defmodule ExIns.Application do
+defmodule Exins.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,21 +8,21 @@ defmodule ExIns.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      ExInsWeb.Telemetry,
-      ExIns.Repo,
+      ExinsWeb.Telemetry,
+      Exins.Repo,
       {DNSCluster, query: Application.get_env(:exins, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: ExIns.PubSub},
+      {Phoenix.PubSub, name: Exins.PubSub},
       # Start the Finch HTTP client for sending emails
-      {Finch, name: ExIns.Finch},
-      # Start a worker by calling: ExIns.Worker.start_link(arg)
-      # {ExIns.Worker, arg},
+      {Finch, name: Exins.Finch},
+      # Start a worker by calling: Exins.Worker.start_link(arg)
+      # {Exins.Worker, arg},
       # Start to serve requests, typically the last entry
-      ExInsWeb.Endpoint
+      ExinsWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: ExIns.Supervisor]
+    opts = [strategy: :one_for_one, name: Exins.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -30,7 +30,7 @@ defmodule ExIns.Application do
   # whenever the application is updated.
   @impl true
   def config_change(changed, _new, removed) do
-    ExInsWeb.Endpoint.config_change(changed, removed)
+    ExinsWeb.Endpoint.config_change(changed, removed)
     :ok
   end
 end

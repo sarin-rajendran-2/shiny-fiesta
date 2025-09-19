@@ -1,4 +1,4 @@
-defmodule ExIns.PolicySystem.Policy do
+defmodule Exins.PolicySystem.Policy do
   use Ash.Resource,
     data_layer: AshPostgres.DataLayer,
     authorizers: [Ash.Policy.Authorizer]
@@ -25,7 +25,9 @@ defmodule ExIns.PolicySystem.Policy do
     end
 
     # Embedded resource named `Doc` (PolicyDocument)
-    attribute :doc, ExIns.PolicySystem.PolicyDocument
+    attribute :doc, Exins.PolicySystem.PolicyDocument do
+      public? true
+    end
 
     create_timestamp :created_at
     update_timestamp :updated_at
@@ -42,6 +44,6 @@ defmodule ExIns.PolicySystem.Policy do
 
   postgres do
     table "policies"
-    repo ExIns.Repo
+    repo Exins.Repo
   end
 end

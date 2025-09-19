@@ -1,4 +1,4 @@
-defmodule ExIns.PolicySystem.PolicyCoverage do
+defmodule Exins.PolicySystem.PolicyCoverage do
   use Ash.Resource, data_layer: :embedded
 
   @doc """
@@ -16,6 +16,7 @@ defmodule ExIns.PolicySystem.PolicyCoverage do
     end
 
     attribute :limit, :money do
+      public? true
       description "The coverage limit."
     end
 

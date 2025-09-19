@@ -11,19 +11,20 @@ config :ash, :custom_types, money: AshMoney.Types.Money
 config :ash, :known_types, [AshMoney.Types.Money]
 
 config :exins,
-  ecto_repos: [ExIns.Repo],
+  ash_domains: [Exins.PolicySystem],
+  ecto_repos: [Exins.Repo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
-config :exins, ExInsWeb.Endpoint,
+config :exins, ExinsWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: ExInsWeb.ErrorHTML, json: ExInsWeb.ErrorJSON],
+    formats: [html: ExinsWeb.ErrorHTML, json: ExinsWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: ExIns.PubSub,
-  live_view: [signing_salt: "sJuiUiIH"]
+  pubsub_server: Exins.PubSub,
+  live_view: [signing_salt: "DcI/rCaB"]
 
 # Configures the mailer
 #
@@ -32,9 +33,7 @@ config :exins, ExInsWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :exins, ExIns.Mailer, adapter: Swoosh.Adapters.Local
-
-config :exins, ash_apis: [ExIns.PolicySystem]
+config :exins, Exins.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,

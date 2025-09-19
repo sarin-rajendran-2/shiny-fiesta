@@ -1,4 +1,4 @@
-defmodule ExIns.Repo do
+defmodule Exins.Repo do
   use AshPostgres.Repo, otp_app: :exins
 
   # Installs Postgres extensions that ash commonly uses

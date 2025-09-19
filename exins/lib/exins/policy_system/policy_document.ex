@@ -1,5 +1,7 @@
-defmodule ExIns.PolicySystem.PolicyDocument do
-  use Ash.Resource, data_layer: :embedded
+defmodule Exins.PolicySystem.PolicyDocument do
+  use Ash.Resource,
+  domain: Exins.PolicySystem,
+  data_layer: :embedded
 
   @doc """
   Represents a detailed policy document.
@@ -62,7 +64,7 @@ defmodule ExIns.PolicySystem.PolicyDocument do
     end
 
     # Embedded resource: Coverage
-    attribute :coverages, {:array, ExIns.PolicySystem.PolicyCoverage}
+    attribute :coverages, {:array, Exins.PolicySystem.PolicyCoverage}
   end
 
   calculations do

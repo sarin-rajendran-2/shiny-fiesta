@@ -1,4 +1,4 @@
-defmodule ExInsWeb.Endpoint do
+defmodule ExinsWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :exins
 
   # The session will be stored in the cookie and signed,
@@ -23,7 +23,7 @@ defmodule ExInsWeb.Endpoint do
     at: "/",
     from: :exins,
     gzip: false,
-    only: ExInsWeb.static_paths()
+    only: ExinsWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -49,5 +49,5 @@ defmodule ExInsWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug ExInsWeb.Router
+  plug ExinsWeb.Router
 end

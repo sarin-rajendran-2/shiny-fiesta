@@ -1,5 +1,5 @@
-defmodule ExInsWeb.PageController do
-  use ExInsWeb, :controller
+defmodule ExinsWeb.PageController do
+  use ExinsWeb, :controller
 
   def home(conn, _params) do
     # The home page is often custom made,

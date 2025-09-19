@@ -1,12 +1,12 @@
-defmodule ExInsWeb do
+defmodule ExinsWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, components, channels, and so on.
 
   This can be used in your application as:
 
-      use ExInsWeb, :controller
-      use ExInsWeb, :html
+      use ExinsWeb, :controller
+      use ExinsWeb, :html
 
   The definitions below will be executed for every controller,
   component, etc, so keep them short and clean, focused
@@ -40,10 +40,10 @@ defmodule ExInsWeb do
     quote do
       use Phoenix.Controller,
         formats: [:html, :json],
-        layouts: [html: ExInsWeb.Layouts]
+        layouts: [html: ExinsWeb.Layouts]
 
       import Plug.Conn
-      import ExInsWeb.Gettext
+      import ExinsWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -52,7 +52,7 @@ defmodule ExInsWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {ExInsWeb.Layouts, :app}
+        layout: {ExinsWeb.Layouts, :app}
 
       unquote(html_helpers())
     end
@@ -84,8 +84,8 @@ defmodule ExInsWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import ExInsWeb.CoreComponents
-      import ExInsWeb.Gettext
+      import ExinsWeb.CoreComponents
+      import ExinsWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
@@ -98,14 +98,14 @@ defmodule ExInsWeb do
   def verified_routes do
     quote do
       use Phoenix.VerifiedRoutes,
-        endpoint: ExInsWeb.Endpoint,
-        router: ExInsWeb.Router,
-        statics: ExInsWeb.static_paths()
+        endpoint: ExinsWeb.Endpoint,
+        router: ExinsWeb.Router,
+        statics: ExinsWeb.static_paths()
     end
   end
 
   @doc """
-  When used, dispatch to the appropriate controller/view/etc.
+  When used, dispatch to the appropriate controller/live_view/etc.
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])

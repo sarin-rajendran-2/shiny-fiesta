@@ -1,4 +1,4 @@
-defmodule ExIns.MixProject do
+defmodule Exins.MixProject do
   use Mix.Project
 
   def project do
@@ -18,7 +18,7 @@ defmodule ExIns.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {ExIns.Application, []},
+      mod: {Exins.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

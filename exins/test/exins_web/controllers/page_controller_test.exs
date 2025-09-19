@@ -1,5 +1,5 @@
-defmodule ExInsWeb.PageControllerTest do
-  use ExInsWeb.ConnCase
+defmodule ExinsWeb.PageControllerTest do
+  use ExinsWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

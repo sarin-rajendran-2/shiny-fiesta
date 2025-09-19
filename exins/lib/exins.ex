@@ -1,6 +1,6 @@
-defmodule ExIns do
+defmodule Exins do
   @moduledoc """
-  ExIns keeps the contexts that define your domain
+  Exins keeps the contexts that define your domain
   and business logic.
 
   Contexts are also responsible for managing your data, regardless

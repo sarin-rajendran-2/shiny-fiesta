@@ -1,4 +1,4 @@
-defmodule ExInsWeb.ConnCase do
+defmodule ExinsWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -11,7 +11,7 @@ defmodule ExInsWeb.ConnCase do
   we enable the SQL sandbox, so changes done to the database
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
-  by setting `use ExInsWeb.ConnCase, async: true`, although
+  by setting `use ExinsWeb.ConnCase, async: true`, although
   this option is not recommended for other databases.
   """
 
@@ -20,19 +20,19 @@ defmodule ExInsWeb.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint ExInsWeb.Endpoint
+      @endpoint ExinsWeb.Endpoint
 
-      use ExInsWeb, :verified_routes
+      use ExinsWeb, :verified_routes
 
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      import ExInsWeb.ConnCase
+      import ExinsWeb.ConnCase
     end
   end
 
   setup tags do
-    ExIns.DataCase.setup_sandbox(tags)
+    Exins.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end
