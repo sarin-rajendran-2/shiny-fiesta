@@ -21,5 +21,15 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: exins_dev
 
+db2:
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: exins_dev
+    image: postgres:17
+    restart: unless-stopped
+    volumes:
+      - postgres-data-2:/var/lib/postgresql/data
 volumes:
   postgres-data:
+  postgres-data-2:
