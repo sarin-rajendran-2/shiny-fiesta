@@ -41,12 +41,17 @@ defmodule Exins.PolicySystem.Policy do
     uuid_v7_primary_key :id
     integer_primary_key :seq_number, public?: false
     attribute :effective_date, :date do
-      allow_nil? true
+      allow_nil? false
       default Date.utc_today()
       public? true
     end
     attribute :expiry_date, :date do
-      allow_nil? true
+      allow_nil? false
+      public? true
+    end
+    attribute :line_of_business, :atom do
+      allow_nil? false
+      constraints [one_of: [:auto, :home]]
       public? true
     end
     # Embedded resource named `Doc` (PolicyDocument)
