@@ -25,6 +25,15 @@ hostname: host.exins
     volumes:
       - postgres-data-2:/var/lib/postgresql/data
 
+  pgAdmin:
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=sarin.rajendran@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=7evenT9!ne
+    image: dpage/pgadmin4
+    ports:
+      - 5555:80
+    restart: unless-stopped
+
   livebook:
     environment:
 - LIVEBOOK_DEFAULT_RUNTIME=attached:app-node-1@host.exins:exins-cookie
