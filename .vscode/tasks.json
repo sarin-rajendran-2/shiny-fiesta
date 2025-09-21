@@ -41,6 +41,32 @@
 			"options": {
 				"cwd": "${workspaceFolder}/exins"
 			}
+		},
+		{
+			"label": "iex: livebook",
+			"type": "shell",
+			"command": "iex",
+			"args": [
+				"--name",
+				"app-node-1@host.exins",
+				"--cookie",
+				"exins-cookie",
+				"-S",
+				"mix",
+				"phx.server"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/exins"
+			},
+			"presentation": {
+				"panel": "new",
+				"reveal": "always",
+				"revealProblems": "onProblem"
+			},
+			"problemMatcher": [
+				"$mixCompileError",
+				"$mixCompileWarning"
+			]
 		}
 	]
 }
