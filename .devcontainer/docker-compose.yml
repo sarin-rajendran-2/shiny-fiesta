@@ -14,13 +14,13 @@ services:
       - ..:/workspace:cached
 
   db:
-        environment:
+    environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: exins_dev
-hostname: host.exins
+    hostname: host.exins
     image: postgres:17
-# network_mode: service:app
+    # network_mode: service:app
     restart: unless-stopped
     volumes:
       - postgres-data-2:/var/lib/postgresql/data
@@ -36,7 +36,7 @@ hostname: host.exins
 
   livebook:
     environment:
-- LIVEBOOK_DEFAULT_RUNTIME=attached:app-node-1@host.exins:exins-cookie
+      - LIVEBOOK_DEFAULT_RUNTIME=attached:app-node-1@host.exins:exins-cookie
       - LIVEBOOK_DISTRIBUTION=exins
       - LIVEBOOK_PASSWORD=new passwordW@!
     image: ghcr.io/livebook-dev/livebook
