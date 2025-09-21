@@ -9,22 +9,46 @@ defmodule Exins.PolicySystem.Policy do
   """
 
   actions do
-    defaults [:create, :read, :update, :destroy]
+    defaults [:read, :destroy]
+
+    create :create do
+      accept [:*]
+      change fn changeset, _context ->
+        IO.inspect(changeset)
+        |> Ash.Changeset.change_new_attribute_lazy(:expiry_date, fn ->
+          effectiveDate = case IO.inspect(Ash.Changeset.get_attribute(changeset, :effective_date)) do
+            nil -> Date.utc_today()
+            someDate -> someDate
+          end
+          Date.shift(effectiveDate, year: 1)
+        end)
+      end
+    end
 
     read :by_id do
       argument :id, :uuid, allow_nil?: false
       get? true
       filter expr(id == ^arg(:id))
     end
+
+    update :update do
+      accept [:*]
+      require_atomic? false
+    end
   end
 
   attributes do
-    attribute :id, :uuid do
-      primary_key? true
-      allow_nil? false
-      description "The system generated unique id for the policy record"
+    uuid_v7_primary_key :id
+    integer_primary_key :seq_number, public?: false
+    attribute :effective_date, :date do
+      allow_nil? true
+      default Date.utc_today()
+      public? true
     end
-
+    attribute :expiry_date, :date do
+      allow_nil? true
+      public? true
+    end
     # Embedded resource named `Doc` (PolicyDocument)
     attribute :doc, Exins.PolicySystem.PolicyDocument do
       public? true
@@ -34,8 +58,20 @@ defmodule Exins.PolicySystem.Policy do
     update_timestamp :updated_at
   end
 
+  calculations do
+    calculate :policy_number, :string, expr(fragment("concat(?, lpad(CAST(seq_number AS TEXT), 8, '0'))", type("POL", :string)))
+  end
+
   postgres do
     table "policies"
     repo Exins.Repo
+  end
+
+  preparations do
+    prepare build(load: [:policy_number])
+  end
+
+  validations do
+      validate compare(:expiry_date, greater_than_or_equal_to: :effective_date)
   end
 end
