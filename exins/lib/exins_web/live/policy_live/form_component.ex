@@ -62,7 +62,7 @@ defmodule ExinsWeb.PolicyLive.FormComponent do
       if policy do
         AshPhoenix.Form.for_update(policy, :update, as: "policy")
       else
-        policyDocForm =
+        _policyDocForm =
           AshPhoenix.Form.for_create(Exins.PolicySystem.PolicyDocument, :create, as: "policyDocument", forms: [auto?: [type: :list]])
         policyForm =
           AshPhoenix.Form.for_create(Exins.PolicySystem.Policy, :create, as: "policy", forms: [type:  :single, ])
