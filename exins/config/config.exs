@@ -15,7 +15,7 @@ config :ex_cldr,
   default_backend: Exins.Cldr
 
 config :exins,
-  ash_domains: [Exins.PolicySystem],
+  ash_domains: [Exins.Common, Exins.PolicySystem],
   ecto_repos: [Exins.Repo],
   generators: [timestamp_type: :utc_datetime]
 
