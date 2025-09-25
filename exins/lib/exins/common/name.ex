@@ -12,7 +12,7 @@ defmodule Exins.Common.Name do
 
   attributes do
     uuid_v7_primary_key :id
-    attribute :type, :string, allow_nil?: true, public?: true
+    attribute :tags, {:array, :string}, allow_nil?: true, public?: true
     attribute :names, :map, allow_nil?: false, public?: true
   end
 end

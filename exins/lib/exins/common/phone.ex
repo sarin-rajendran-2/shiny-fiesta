@@ -12,7 +12,7 @@ defmodule Exins.Common.Phone do
 
   attributes do
     uuid_v7_primary_key :id
-    attribute :type, :string, allow_nil?: true, public?: true
+    attribute :tags, {:array, :string}, allow_nil?: true, public?: true
     attribute :numbers, :map, allow_nil?: false, public?: true
   end
   calculations do
