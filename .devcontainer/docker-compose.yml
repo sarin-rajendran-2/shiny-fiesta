@@ -12,6 +12,7 @@ services:
 
     volumes:
       - ..:/workspace:cached
+      - livebook:/workspaces/shiny-fiesta/livebook:cached
 
   db:
     environment:
@@ -43,7 +44,7 @@ services:
     network_mode: service:db
     restart: unless-stopped 
     volumes:
-      - ../livebooks:/data
-      # - ../../workspaces/shiny-fiesta/livebook:/data:cached
+      - livebook:/data:cached
 volumes:
   postgres-data-2:
+  livebook:
