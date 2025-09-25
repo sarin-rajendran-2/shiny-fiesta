@@ -20,6 +20,8 @@ defmodule Exins.Common.Contact do
       constraints [one_of: [:individual, :organization]]
     end
 
+    attribute :emails, {:array, Exins.Common.Email}, public?: true, allow_nil?: true
+
     attribute :names, {:array, Exins.Common.Name}, public?: true, allow_nil?: false
 
     attribute :phones, {:array, Exins.Common.Phone}, public?: true, allow_nil?: true
