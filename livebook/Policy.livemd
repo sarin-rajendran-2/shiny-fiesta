@@ -1,0 +1,22 @@
+# Policy notebook
+
+## Create
+
+```elixir
+new_policy = %{
+  line_of_business: :home
+}
+
+Exins.PolicySystem.Policy
+|> Ash.Changeset.for_create(:create, new_policy)
+|> Ash.create!()
+```
+
+## Read
+
+```elixir
+require Ash.Query
+
+Exins.PolicySystem.Policy
+|> Ash.read!()
+```

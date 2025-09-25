@@ -1,0 +1,120 @@
+# Contact
+
+## Read
+
+```elixir
+Exins.Common.Contact
+|> Ash.read!()
+```
+
+## Create
+
+```elixir
+new_names = [
+  %{
+    names: %{
+      first_name: "Michael",
+      middle_name: "E.",
+      last_name: "Jordan"
+    }
+  },
+  %{
+    tags: ["Also Known As"],
+    names: %{
+      first_name: "Air",
+      last_name: "Jordan"
+    }
+  }
+]
+
+new_emails = [
+  %{
+    tags: ["Personal"],
+    email: [
+      "air.jordan@exins-fake.com"
+    ]
+  },
+  %{
+    tags: ["Work"],
+    email: [
+      "michael.jordan@exins-fake.com"
+    ]
+  }
+]
+
+new_contact = %{
+  contact_type: :individual,
+  names: new_names,
+  emails: new_emails
+}
+
+Exins.Common.Contact
+|> Ash.Changeset.for_create(:create, new_contact)
+|> Ash.create!()
+```
+
+## Update
+
+### Update Existing Name
+
+```elixir
+require Ash.Query
+
+existing_name = %{
+  id: "01996dc0-485e-7612-8de8-d4ce401abf00",
+  tags: ["Primary"],
+  names: %{first_name: "First Name 2", last_name: "Last Name 2"}
+}
+
+Exins.Common.Contact
+|> Ash.Query.filter(seq_number == 2)
+|> Ash.read_one!()
+|> Ash.Changeset.for_update(:update, %{ names: [existing_name] })
+|> Ash.update!()
+```
+
+### Update Existing Email
+
+```elixir
+require Ash.Query
+
+jordan = Exins.Common.Contact
+|> Ash.Query.filter(seq_number == 7)
+|> Ash.read_one!()
+
+dbg(jordan.emails)
+
+existing_email = %{
+  id: "01998282-6e15-7261-86fe-de6eaec80491",
+  tags: ["Work"],
+  email: ["michael.jordan@michael-jordan.com"]
+}
+
+jordan
+|> Ash.Changeset.for_update(:update, %{ emails: [existing_email] })
+|> Ash.update!()
+```
+
+### Update Existing Phone
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+require Ash.Query
+
+the_one = Exins.Common.Contact
+|> Ash.Query.filter(seq_number == 1)
+|> Ash.read_one!()
+```
+
+```elixir
+existing_phone = %{
+  id: "01997356-e3fa-7a47-8fdc-cc8fc9844365",
+  tags: ["Default"],
+  numbers: %{ country_code: "61", phone_number: "21345678" }
+}
+
+the_one
+|> Ash.Changeset.for_update(:update, %{ phones: [existing_phone] })
+|> Ash.update!()
+```
