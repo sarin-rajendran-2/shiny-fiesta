@@ -4,7 +4,8 @@ defmodule Exins.Common.Phone do
   """
 
   use Ash.Resource,
-  data_layer: :embedded
+  data_layer: :embedded,
+  embed_nil_values?: false
 
   actions do
     defaults [:destroy, :read, create: :*, update: :*]
@@ -13,10 +14,11 @@ defmodule Exins.Common.Phone do
   attributes do
     uuid_v7_primary_key :id
     attribute :tags, {:array, :string}, allow_nil?: true, public?: true
-    attribute :numbers, :map, allow_nil?: false, public?: true
+    attribute :number_parts, :map, allow_nil?: false, public?: true
   end
+
   calculations do
-    calculate :full_phone_number, :string, expr("+" <> numbers["country_code"] <> numbers["phone_number"])
+    calculate :full_phone_number, :string, expr("+" <> number_parts[:country_code] <> number_parts[:phone_number])
   end
 
   preparations do
