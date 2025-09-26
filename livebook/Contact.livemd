@@ -7,12 +7,24 @@ Exins.Common.Contact
 |> Ash.read!()
 ```
 
+## Destroy
+
+```elixir
+require Ash.Query
+
+Exins.Common.Contact
+|> Ash.Query.filter(is_nil(names) == false 
+  && names |> Enum.any?(fn name -> is_nil(name.tags) end))
+
+|> Ash.read()
+```
+
 ## Create
 
 ```elixir
 new_names = [
   %{
-    names: %{
+    name_parts: %{
       first_name: "Michael",
       middle_name: "E.",
       last_name: "Jordan"
@@ -20,7 +32,7 @@ new_names = [
   },
   %{
     tags: ["Also Known As"],
-    names: %{
+    name_parts: %{
       first_name: "Air",
       last_name: "Jordan"
     }
@@ -30,15 +42,13 @@ new_names = [
 new_emails = [
   %{
     tags: ["Personal"],
-    email: [
+    email:
       "air.jordan@exins-fake.com"
-    ]
   },
   %{
     tags: ["Work"],
-    email: [
+    email:
       "michael.jordan@exins-fake.com"
-    ]
   }
 ]
 
@@ -63,7 +73,7 @@ require Ash.Query
 existing_name = %{
   id: "01996dc0-485e-7612-8de8-d4ce401abf00",
   tags: ["Primary"],
-  names: %{first_name: "First Name 2", last_name: "Last Name 2"}
+  name_parts: %{first_name: "First Name 2", last_name: "Last Name 2"}
 }
 
 Exins.Common.Contact
@@ -111,10 +121,74 @@ the_one = Exins.Common.Contact
 existing_phone = %{
   id: "01997356-e3fa-7a47-8fdc-cc8fc9844365",
   tags: ["Default"],
-  numbers: %{ country_code: "61", phone_number: "21345678" }
+  number_parts: %{ country_code: "61", phone_number: "21345678" }
 }
 
 the_one
 |> Ash.Changeset.for_update(:update, %{ phones: [existing_phone] })
+|> Ash.update!()
+```
+
+### Add New Address
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+require Ash.Query
+
+four = Exins.Common.Contact
+|> Ash.Query.filter(seq_number == 4)
+|> Ash.read_one!()
+
+four
+```
+
+```elixir
+new_address = %{
+  address_parts: %{
+    street_address: ["401 Mango Street", "Apartment 412"],
+    city: "Richmond",
+    state: "VIC",
+    post_code: 3008,
+    country: "AU"
+  }
+}
+
+four
+|> Ash.Changeset.for_update(:update, %{ addresses: [new_address] })
+|> Ash.update!()
+```
+
+### Add New Email
+
+<!-- livebook:{"reevaluate_automatically":true} -->
+
+```elixir
+require Ash.Query
+
+nine = Exins.Common.Contact
+|> Ash.Query.filter(seq_number == 9)
+|> Ash.read_one!()
+```
+
+```elixir
+emails = [
+  %{
+    email: "the.boss@air.jordan.fake"
+  },
+  %{
+    tags: ["Personal"],
+    email: "mj@air.jordan.fake"
+  },
+  %{
+    tags: ["Work"],
+    email: "michael.jordan@michael.jordan.fake"
+  }
+]
+
+nine
+|> Ash.Changeset.for_update(:update, %{emails: nil})
+|> Ash.update!()
+|> Ash.Changeset.for_update(:update, %{emails: emails})
 |> Ash.update!()
 ```
