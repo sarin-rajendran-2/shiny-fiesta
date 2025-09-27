@@ -3,8 +3,12 @@
 ## Read
 
 ```elixir
+require Ash.Query
+
 Exins.Common.Contact
+|> Ash.Query.load([:default_name, :default_phone, :default_email, :default_address])
 |> Ash.read!()
+
 ```
 
 ## Destroy
