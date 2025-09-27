@@ -6,6 +6,7 @@ defmodule Exins.Common.Name do
   use Ash.Resource,
   data_layer: :embedded,
   embed_nil_values?: false
+  alias Exins.Common.FullNameCalculation
 
   actions do
     defaults [:destroy, :read, create: :*, update: :*]
@@ -18,7 +19,7 @@ defmodule Exins.Common.Name do
   end
 
   calculations do
-    calculate :full_name, :string, {Exins.Common.FullName, []} do
+    calculate :full_name, :string, {Exins.Common.FullNameCalculation, []} do
       argument :separator, :string, default: " "
     end
   end
