@@ -18,7 +18,9 @@ defmodule Exins.Common.Name do
   end
 
   calculations do
-    calculate :full_name, :string, expr(name_parts[:first_name] <> " " <> name_parts[:last_name])
+    calculate :full_name, :string, {Exins.Common.FullName, []} do
+      argument :separator, :string, default: " "
+    end
   end
 
   preparations do

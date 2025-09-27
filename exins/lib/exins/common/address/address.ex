@@ -1,4 +1,4 @@
-defmodule Exins.Common.AddressFormatter do
+defmodule Exins.Common.Calculations.FullAddress do
   use Ash.Resource.Calculation
 
   @impl true
@@ -28,11 +28,12 @@ defmodule Exins.Common.AddressFormatter do
 
   @impl true
   def calculate(addresses, _opts, %{arguments: %{separator: separator}}) do
-      Enum.map(addresses, fn address -> format_address(address, separator) end)
+      Enum.map(addresses, &format_address(&1, separator))
   end
 end
 
 defmodule Exins.Common.Address do
+  alias Exins.Common.Calculations.FullAddress
   @moduledoc """
   The Address resource.
   """
@@ -52,7 +53,7 @@ defmodule Exins.Common.Address do
   end
 
   calculations do
-    calculate :full_address, :string, {Exins.Common.AddressFormatter, [separator: "\n"]} do
+    calculate :full_address, :string, {FullAddress, []} do
       argument :separator, :string, default: ", "
     end
   end
