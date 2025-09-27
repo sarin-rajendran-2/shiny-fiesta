@@ -1,5 +1,5 @@
 defmodule Exins.Common.Contact do
-  alias Exins.Common.Calculations.ContactDefault,
+  alias Exins.Common.ContactDefaultCalculation,
   alias Exins.Common.{Address, Email, Name, Phone}
 
   @moduledoc """
@@ -33,16 +33,16 @@ defmodule Exins.Common.Contact do
   end
 
   calculations do
-    calculate :default_address, Address, {ContactDefault, [attribute: :addresses]} do
+    calculate :default_address, Address, {ContactDefaultCalculation, [attribute: :addresses]} do
       argument :tag, :string, default: "Default"
     end
-    calculate :default_email, Email, {ContactDefault, [attribute: :emails]} do
+    calculate :default_email, Email, {ContactDefaultCalculation, [attribute: :emails]} do
       argument :tag, :string, default: "Default"
     end
-    calculate :default_name, Name, {ContactDefault, [attribute: :names]} do
+    calculate :default_name, Name, {ContactDefaultCalculation, [attribute: :names]} do
       argument :tag, :string, default: "Default"
     end
-    calculate :default_phone, Phone, {ContactDefault, [attribute: :phones]} do
+    calculate :default_phone, Phone, {ContactDefaultCalculation, [attribute: :phones]} do
       argument :tag, :string, default: "Default"
     end
   end
