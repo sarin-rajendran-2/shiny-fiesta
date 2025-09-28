@@ -12,7 +12,16 @@ services:
 
     volumes:
       - ..:/workspace:cached
-      - livebook:/workspaces/shiny-fiesta/livebook:cached
+      - type: volume
+        source: app
+        target: /workspaces/shiny-fiesta/livebook
+        volume:
+          subpath: livebook
+      - type: volume
+        source: app
+        target: /workspaces/shiny-fiesta/exins/priv
+        volume:
+          subpath: exins/priv
 
   db:
     environment:
@@ -24,7 +33,11 @@ services:
     # network_mode: service:app
     restart: unless-stopped
     volumes:
-      - postgres-data-2:/var/lib/postgresql/data
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+        volume:
+          subpath: data
 
   pgAdmin:
     environment:
@@ -44,7 +57,11 @@ services:
     network_mode: service:db
     restart: unless-stopped 
     volumes:
-      - livebook:/data:cached
+      - type: volume
+        source: app
+        target: /data
+        volume:
+          subpath: livebook
 volumes:
-  postgres-data-2:
-  livebook:
+  postgres-data:
+  app:
