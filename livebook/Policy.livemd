@@ -1,10 +1,22 @@
 # Policy notebook
 
+## Read
+
+```elixir
+require Ash.Query
+
+Exins.PolicySystem.Policy
+|> Ash.Query.load([applicant: [:practice_location]])
+|> Ash.read!()
+```
+
 ## Create
+
+### Basic
 
 ```elixir
 new_policy = %{
-  line_of_business: :home
+  line_of_business: :auto
 }
 
 Exins.PolicySystem.Policy
@@ -12,11 +24,109 @@ Exins.PolicySystem.Policy
 |> Ash.create!()
 ```
 
-## Read
+### Create with Applicant
 
 ```elixir
 require Ash.Query
 
+%{id: contact_id} = Exins.Common.Contact
+  |> Ash.Query.filter(seq_number == 1)
+  |> Ash.Query.select([:id])
+  |> Ash.read_first!
+  |> Map.from_struct
+
+applicant = Exins.PolicySystem.Applicant
+  |> Ash.Changeset.for_create(:create, %{contact_id: contact_id})
+  |> Ash.create!
+  |> IO.inspect
+
+new_policy_input = %{
+  line_of_business: :home,
+  applicant: %{contact_id: contact_id}
+}
+
 Exins.PolicySystem.Policy
-|> Ash.read!()
+  |> Ash.Changeset.for_create(:create, new_policy_input)
+  |> Ash.create!()
+# Exins.PolicySystem.Policy
+# |> Ash.Changeset.for_create(:create, new_policy)
+```
+
+## MI Policy with Applicant
+
+```elixir
+require Ash.Query
+
+%{id: contact_id} = Exins.Common.Contact
+  |> Ash.Query.filter(seq_number == 2)
+  |> Ash.Query.select([:id])
+  |> Ash.read_first!
+  |> Map.from_struct
+
+applicant_input = %{
+  line_of_business: :medical_indemnity,
+  contact_id: contact_id,
+  practice_location: %{
+    street_address: ["401 Apollo Street"],
+    city: "Sunshine",
+    state: "VIC",
+    post_code: 3008,
+    country: "AU"
+  }
+}
+
+applicant = Exins.PolicySystem.Applicant
+  |> Ash.Changeset.for_create(:create, applicant_input)
+  # |> Ash.create!
+  |> IO.inspect
+
+new_policy_input = %{
+  line_of_business: :medical_indemnity,
+  applicant: applicant_input
+}
+
+Exins.PolicySystem.Policy
+  |> Ash.Changeset.for_create(:create, new_policy_input)
+  |> Ash.create!()
+```
+
+#### MI Policy without Practice Location (Throws error)
+
+```elixir
+ExUnit.start()
+```
+
+```elixir
+defmodule PolicyTests do
+  use ExUnit.Case, async: false
+
+  require Ash.Query
+
+  test "Cannot create MI Policy without specifying a valid practice location" do
+    %{id: contact_id} = Exins.Common.Contact
+      |> Ash.Query.filter(seq_number == 2)
+      |> Ash.Query.select([:id])
+      |> Ash.read_first!
+      |> Map.from_struct
+    
+    applicant_input = %{
+      line_of_business: :medical_indemnity,
+      contact_id: contact_id
+    }
+    
+    new_policy_input = %{
+      line_of_business: :medical_indemnity,
+      applicant: applicant_input
+    }
+
+    assert_raise Ash.Error.Invalid, fn -> 
+      Exins.PolicySystem.Policy
+      |> Ash.Changeset.for_create(:create, new_policy_input)
+      |> Ash.create!()
+    end
+  end
+end
+
+ExUnit.run()
+
 ```
