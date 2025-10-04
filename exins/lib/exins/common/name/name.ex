@@ -19,7 +19,7 @@ defmodule Exins.Common.Name do
   end
 
   calculations do
-    calculate :full_name, :string, {Exins.Common.FullNameCalculation, []} do
+    calculate :full_name, :string, {FullNameCalculation, []} do
       argument :separator, :string, default: " "
     end
   end
