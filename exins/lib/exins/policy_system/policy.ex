@@ -39,7 +39,11 @@ defmodule Exins.PolicySystem.Policy do
 
   attributes do
     uuid_v7_primary_key :id
-    integer_primary_key :seq_number, public?: false
+    attribute :seq_number, :integer do
+      allow_nil? false
+      generated? true
+      public? false
+    end
     attribute :effective_date, :date do
       allow_nil? false
       default Date.utc_today()
@@ -64,7 +68,11 @@ defmodule Exins.PolicySystem.Policy do
   end
 
   calculations do
-    calculate :policy_number, :string, expr(fragment("concat(?, lpad(CAST(seq_number AS TEXT), 8, '0'))", type("POL", :string)))
+    calculate :policy_number, :ci_string, expr(fragment("concat(?, lpad(CAST(seq_number AS TEXT), 8, '0'))", type("POL", :string)))
+  end
+
+  identities do
+    identity :unique_seq_number, [:seq_number]
   end
 
   postgres do
