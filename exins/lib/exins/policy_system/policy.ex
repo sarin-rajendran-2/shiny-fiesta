@@ -7,6 +7,7 @@ defmodule Exins.PolicySystem.Policy do
   @doc """
   Represents an insurance policy.
   """
+  @default_term [year: 1]
   @lines_of_business [:auto, :home, :medical_indenmity]
   @statuses [:quote, :in_force, :cancelled]
 
@@ -16,13 +17,13 @@ defmodule Exins.PolicySystem.Policy do
     create :create do
       accept [:*]
       change fn changeset, _context ->
-        IO.inspect(changeset)
+        changeset
         |> Ash.Changeset.change_new_attribute_lazy(:expiry_date, fn ->
-          effectiveDate = case IO.inspect(Ash.Changeset.get_attribute(changeset, :effective_date)) do
+          effectiveDate = case changeset |> Ash.Changeset.get_attribute(:effective_date) do
             nil -> Date.utc_today()
             someDate -> someDate
           end
-          Date.shift(effectiveDate, year: 1)
+          Date.shift(effectiveDate, @default_term)
         end)
       end
     end
