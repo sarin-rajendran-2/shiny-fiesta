@@ -2,44 +2,47 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "mix",
-			"task": "Build",
-			"problemMatcher": [
-				"$mixCompileError",
-				"$mixCompileWarning"
+			"label": "mix: Rebuild",
+			"type": "shell",
+			"dependsOn": [
+				"mix: Clean project",
+				"mix: Build"
 			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
+			"problemMatcher": [
+				"$mixCompileError"
+			]
+		},
+		{
+			"label": "mix: Ash Codegen",
+			"type": "shell",
+			"command": "mix",
+			"args": [
+				"ash.codegen",
+				"--dev"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/exins"
 			},
-			"label": "mix: Build",
-			"options": {
-				"cwd": "${workspaceFolder}/exins"
+			"presentation": {
+				"panel": "shared",
+				"reveal": "silent",
+				"revealProblems": "onProblem"
 			}
 		},
 		{
-			"type": "mix",
-			"task": "Build dependencies",
-			"problemMatcher": [
-				"$mixCompileError",
-				"$mixCompileWarning"
+			"label": "mix: Ash Migrate",
+			"type": "shell",
+			"command": "mix",
+			"args": [
+				"ash.migrate"
 			],
-			"group": "build",
-			"label": "mix: Build dependencies",
 			"options": {
 				"cwd": "${workspaceFolder}/exins"
-			}
-		},
-		{
-			"type": "mix",
-			"task": "Get deps",
-			"problemMatcher": [
-				"$mixCompileError",
-				"$mixCompileWarning"
-			],
-			"label": "mix: Get deps",
-			"options": {
-				"cwd": "${workspaceFolder}/exins"
+			},
+			"presentation": {
+				"panel": "shared",
+				"reveal": "silent",
+				"revealProblems": "onProblem"
 			}
 		},
 		{
@@ -54,6 +57,10 @@
 				"-S",
 				"mix",
 				"phx.server"
+			],
+			"dependsOn": [
+				"mix: Ash Codegen",
+				"mix: Ash Migrate"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}/exins"
