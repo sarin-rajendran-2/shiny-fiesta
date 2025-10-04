@@ -2,7 +2,7 @@
 	"name": "ExIns: (Elixir, Phoenix app & PostgreSQL db)",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "app",
-	"workspaceFolder": "/workspace:cached",
+	"workspaceFolder": "/workspace",
 
 	// Configure tool-specific properties.
 	"customizations": {

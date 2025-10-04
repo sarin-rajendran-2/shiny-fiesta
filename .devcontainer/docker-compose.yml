@@ -14,12 +14,12 @@ services:
       - ..:/workspace:cached
       - type: volume
         source: app
-        target: /workspaces/shiny-fiesta/livebook
+        target: /workspace/livebook
         volume:
           subpath: livebook
       - type: volume
         source: app
-        target: /workspaces/shiny-fiesta/exins/priv
+        target: /workspace/exins/priv
         volume:
           subpath: exins/priv
 
