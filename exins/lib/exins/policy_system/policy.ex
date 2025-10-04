@@ -47,7 +47,7 @@ defmodule Exins.PolicySystem.Policy do
     end
     attribute :effective_date, :date do
       allow_nil? false
-      default Date.utc_today()
+      default &Date.utc_today/0
       public? true
     end
     attribute :expiry_date, :date do
