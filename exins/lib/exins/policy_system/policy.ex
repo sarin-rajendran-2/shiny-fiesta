@@ -7,6 +7,9 @@ defmodule Exins.PolicySystem.Policy do
   @doc """
   Represents an insurance policy.
   """
+  alias Exins.PolicySystem.Applicant
+  alias Exins.PolicySystem.PolicyDocument
+
   @default_term [year: 1]
   @lines_of_business [:auto, :home, :medical_indenmity]
   @statuses [:quote, :in_force, :cancelled]
@@ -16,6 +19,8 @@ defmodule Exins.PolicySystem.Policy do
 
     create :create do
       accept [:*]
+      argument :applicant, :map, allow_nil?: true
+
       change fn changeset, _context ->
         changeset
         |> Ash.Changeset.change_new_attribute_lazy(:expiry_date, fn ->
@@ -26,6 +31,10 @@ defmodule Exins.PolicySystem.Policy do
           Date.shift(effectiveDate, @default_term)
         end)
       end
+
+      change set_context(%{line_of_business: arg(:line_of_business)})
+
+      change manage_relationship(:applicant, :applicant, type: :create)
     end
 
     read :by_id do
@@ -69,7 +78,7 @@ defmodule Exins.PolicySystem.Policy do
       allow_nil? false
     end
     # Embedded resource named `Doc` (PolicyDocument)
-    attribute :doc, Exins.PolicySystem.PolicyDocument do
+    attribute :doc, PolicyDocument do
       public? true
     end
 
@@ -92,6 +101,13 @@ defmodule Exins.PolicySystem.Policy do
 
   preparations do
     prepare build(load: [:policy_number])
+  end
+
+  relationships do
+    belongs_to :applicant, Applicant do
+      public? true
+      allow_nil? true
+    end
   end
 
   validations do
