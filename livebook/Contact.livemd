@@ -64,7 +64,7 @@ new_contact = %{
 
 Exins.Common.Contact
 |> Ash.Changeset.for_create(:create, new_contact)
-|> Ash.create!()
+# |> Ash.create!()
 ```
 
 ## Update
@@ -81,10 +81,9 @@ existing_name = %{
 }
 
 Exins.Common.Contact
-|> Ash.Query.filter(seq_number == 2)
-|> Ash.read_one!()
+|> Ash.get!(%{seq_number: 2})
 |> Ash.Changeset.for_update(:update, %{ names: [existing_name] })
-|> Ash.update!()
+# |> Ash.update!()
 ```
 
 ### Update Existing Email
@@ -93,8 +92,7 @@ Exins.Common.Contact
 require Ash.Query
 
 jordan = Exins.Common.Contact
-|> Ash.Query.filter(seq_number == 7)
-|> Ash.read_one!()
+|> Ash.get!(%{seq_number: 7})
 
 dbg(jordan.emails)
 
@@ -106,7 +104,7 @@ existing_email = %{
 
 jordan
 |> Ash.Changeset.for_update(:update, %{ emails: [existing_email] })
-|> Ash.update!()
+# |> Ash.update!()
 ```
 
 ### Update Existing Phone
@@ -114,11 +112,8 @@ jordan
 <!-- livebook:{"reevaluate_automatically":true} -->
 
 ```elixir
-require Ash.Query
-
 the_one = Exins.Common.Contact
-|> Ash.Query.filter(seq_number == 1)
-|> Ash.read_one!()
+|> Ash.get!(%{seq_number: 1})
 ```
 
 ```elixir
@@ -130,7 +125,7 @@ existing_phone = %{
 
 the_one
 |> Ash.Changeset.for_update(:update, %{ phones: [existing_phone] })
-|> Ash.update!()
+# |> Ash.update!()
 ```
 
 ### Add New Address
@@ -138,13 +133,8 @@ the_one
 <!-- livebook:{"reevaluate_automatically":true} -->
 
 ```elixir
-require Ash.Query
-
 four = Exins.Common.Contact
-|> Ash.Query.filter(seq_number == 4)
-|> Ash.read_one!()
-
-four
+|> Ash.get!(%{seq_number: 4})
 ```
 
 ```elixir
@@ -160,7 +150,7 @@ new_address = %{
 
 four
 |> Ash.Changeset.for_update(:update, %{ addresses: [new_address] })
-|> Ash.update!()
+# |> Ash.update!()
 ```
 
 ### Add New Email
@@ -168,11 +158,8 @@ four
 <!-- livebook:{"reevaluate_automatically":true} -->
 
 ```elixir
-require Ash.Query
-
 nine = Exins.Common.Contact
-|> Ash.Query.filter(seq_number == 9)
-|> Ash.read_one!()
+|> Ash.get!(%{seq_number: 9})
 ```
 
 ```elixir
