@@ -10,5 +10,6 @@ defmodule Exins.PolicySystem do
       define :destroy_policy, action: :destroy
       define :get_policy, args: [:id], action: :by_id
     end
+    resource Exins.PolicySystem.Applicant
   end
 end
