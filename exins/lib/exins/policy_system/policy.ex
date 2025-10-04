@@ -7,6 +7,7 @@ defmodule Exins.PolicySystem.Policy do
   @doc """
   Represents an insurance policy.
   """
+  @lines_of_business [:auto, :home, :medical_indenmity]
 
   actions do
     defaults [:read, :destroy]
@@ -55,7 +56,7 @@ defmodule Exins.PolicySystem.Policy do
     end
     attribute :line_of_business, :atom do
       allow_nil? false
-      constraints [one_of: [:auto, :home]]
+      constraints [one_of: @lines_of_business]
       public? true
     end
     # Embedded resource named `Doc` (PolicyDocument)
