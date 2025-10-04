@@ -16,7 +16,11 @@ defmodule Exins.Common.Contact do
 
   attributes do
     uuid_v7_primary_key :id
-    integer_primary_key :seq_number, public?: false
+    attribute :seq_number, :integer do
+      allow_nil? false
+      generated? true
+      public? false
+    end
     attribute :contact_type, :atom do
       allow_nil? true
       public? true
@@ -45,6 +49,10 @@ defmodule Exins.Common.Contact do
     calculate :default_phone, Phone, {ContactDefaultCalculation, [attribute: :phones]} do
       argument :tag, :string, default: "Default"
     end
+  end
+
+  identities do
+    identity :unique_seq_number, [:seq_number]
   end
 
   postgres do
