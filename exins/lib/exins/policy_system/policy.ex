@@ -11,7 +11,7 @@ defmodule Exins.PolicySystem.Policy do
   @statuses [:quote, :in_force, :cancelled]
 
   actions do
-    defaults [:read, :destroy]
+    defaults [:read, :destroy, update: :*]
 
     create :create do
       accept [:*]
@@ -31,11 +31,6 @@ defmodule Exins.PolicySystem.Policy do
       argument :id, :uuid, allow_nil?: false
       get? true
       filter expr(id == ^arg(:id))
-    end
-
-    update :update do
-      accept [:*]
-      require_atomic? false
     end
   end
 
