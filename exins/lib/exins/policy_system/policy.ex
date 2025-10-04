@@ -8,6 +8,7 @@ defmodule Exins.PolicySystem.Policy do
   Represents an insurance policy.
   """
   @lines_of_business [:auto, :home, :medical_indenmity]
+  @statuses [:quote, :in_force, :cancelled]
 
   actions do
     defaults [:read, :destroy]
@@ -58,6 +59,13 @@ defmodule Exins.PolicySystem.Policy do
       allow_nil? false
       constraints [one_of: @lines_of_business]
       public? true
+    end
+    attribute :status, :atom do
+      public? true
+      description "The status of the policy"
+      constraints [one_of: @statuses]
+      default :quote
+      allow_nil? false
     end
     # Embedded resource named `Doc` (PolicyDocument)
     attribute :doc, Exins.PolicySystem.PolicyDocument do
