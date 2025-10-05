@@ -29,15 +29,15 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: exins_dev
     hostname: host.exins
-    image: postgres:17
+    image: postgres:18
     # network_mode: service:app
     restart: unless-stopped
     volumes:
       - type: volume
         source: postgres-data
-        target: /var/lib/postgresql/data
+        target: /var/lib/postgresql/18/data
         volume:
-          subpath: data
+          subpath: 18/data
 
   pgAdmin:
     environment:
