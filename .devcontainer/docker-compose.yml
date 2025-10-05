@@ -47,6 +47,12 @@ services:
     ports:
       - 5555:80
     restart: unless-stopped
+    volumes:
+      - type: volume
+        source: app
+        target: /pgadmin4/config_local.py
+        volume:
+          subpath: pgadmin4/config_local.py
 
   livebook:
     environment:
