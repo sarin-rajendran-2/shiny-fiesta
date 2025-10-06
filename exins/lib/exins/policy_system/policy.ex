@@ -11,7 +11,7 @@ defmodule Exins.PolicySystem.Policy do
   alias Exins.PolicySystem.PolicyDocument
 
   @default_term [year: 1]
-  @lines_of_business [:auto, :home, :medical_indenmity]
+  @lines_of_business [:auto, :home, :medical_indemnity]
   @statuses [:quote, :in_force, :cancelled]
 
   actions do

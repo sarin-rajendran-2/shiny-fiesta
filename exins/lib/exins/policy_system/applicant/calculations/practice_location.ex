@@ -4,7 +4,7 @@ defmodule Exins.Common.PracticeLocationCalculation do
   """
   use Ash.Resource.Calculation
 
-  alias Exins.Common.{Address, Contact}
+  alias Exins.Common.Contact
   alias Exins.PolicySystem.Applicant
 
   @impl true
