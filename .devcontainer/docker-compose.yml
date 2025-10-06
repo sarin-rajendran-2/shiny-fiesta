@@ -3,6 +3,7 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
     environment:
+      - GIT_EDITOR=code --wait
       - RELEASE_NODE=app-node-1@app.exins
       - RELEASE_COOKIE=exins-cookie    
     image: elixir:1.18
