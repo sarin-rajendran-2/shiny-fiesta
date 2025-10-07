@@ -19,6 +19,13 @@ defmodule ExinsWeb.Router do
 
     get "/", PageController, :home
 
+    live "/contacts", ContactLive.Index, :index
+    live "/contacts/new", ContactLive.Form, :new
+    live "/contacts/:id/edit", ContactLive.Form, :edit
+
+    live "/contacts/:id", ContactLive.Show, :show
+    live "/contacts/:id/show/edit", ContactLive.Show, :edit
+
     live "/policies", PolicyLive.Index, :index
     live "/policies/new", PolicyLive.Form, :new
     live "/policies/:id/edit", PolicyLive.Form, :edit
