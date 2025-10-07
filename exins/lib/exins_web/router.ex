@@ -26,6 +26,12 @@ defmodule ExinsWeb.Router do
     live "/policies/:id", PolicyLive.Show, :show
     live "/policies/:id/show/edit", PolicyLive.Show, :edit
 
+    live "/applicants", ApplicantLive.Index, :index
+    live "/applicants/new", ApplicantLive.Form, :new
+    live "/applicants/:id/edit", ApplicantLive.Form, :edit
+
+    live "/applicants/:id", ApplicantLive.Show, :show
+    live "/applicants/:id/show/edit", ApplicantLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
