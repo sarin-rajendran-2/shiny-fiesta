@@ -20,6 +20,10 @@ config :ash,
   read_action_after_action_hooks_in_order?: true,
   show_keysets_for_all_actions?: false
 
+config :ex_cldr,
+  default_locale: "en",
+  default_backend: Exins.Cldr
+
 config :spark,
   formatter: [
     remove_parens?: true,
