@@ -27,7 +27,11 @@
 				"panel": "shared",
 				"reveal": "silent",
 				"revealProblems": "onProblem"
-			}
+			},
+			"problemMatcher": [
+				"$mixCompileError",
+				"$mixCompileWarning"
+			]
 		},
 		{
 			"label": "mix: Ash Migrate",
@@ -36,6 +40,9 @@
 			"args": [
 				"ash.migrate"
 			],
+			"dependsOn": [
+				"mix: Ash Codegen"
+			],
 			"options": {
 				"cwd": "${workspaceFolder}/exins"
 			},
@@ -43,7 +50,10 @@
 				"panel": "shared",
 				"reveal": "silent",
 				"revealProblems": "onProblem"
-			}
+			},
+			"problemMatcher": [
+				"$mixCompileError"
+			]
 		},
 		{
 			"label": "iex: livebook",
@@ -58,10 +68,7 @@
 				"mix",
 				"phx.server"
 			],
-			"dependsOn": [
-				"mix: Ash Codegen",
-				"mix: Ash Migrate"
-			],
+			"dependsOn": [ "mix: Ash Migrate" ],
 			"options": {
 				"cwd": "${workspaceFolder}/exins"
 			},
