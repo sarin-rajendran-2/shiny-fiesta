@@ -14,7 +14,7 @@ services:
     volumes:
       - ..:/workspace:cached
       - app:/workspace/volumes/app:cached
-      - postgres-data:/workspace/volumes/postgres-data:cached
+      - postgres-data:/workspace/volumes/postgres-data
       - type: volume
         source: app
         target: /workspace/livebook
