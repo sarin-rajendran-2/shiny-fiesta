@@ -11,7 +11,13 @@ defmodule Exins.Common.Contact do
     data_layer: AshPostgres.DataLayer
 
   actions do
-    defaults [:destroy, :read, create: :*, update: :*]
+    defaults [:destroy, :read, create: :*]
+
+    update :update do
+      accept :*
+      primary? true
+      require_atomic? false
+    end
   end
 
   attributes do
