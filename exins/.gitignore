@@ -35,3 +35,10 @@ exins-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Environment files
+.env
+.env.local
+.env.*
+!.devcontainer/.env.example
+!.devcontainer/.env.dev
+

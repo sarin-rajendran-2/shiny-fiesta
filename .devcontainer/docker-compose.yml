@@ -2,10 +2,12 @@ services:
   app:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
+    env_file:
+      - .env.dev
+      - .env
     environment:
       - GIT_EDITOR=code --wait
       - RELEASE_NODE=app-node-1@app.exins
-      - RELEASE_COOKIE=exins-cookie    
     image: elixir:1.18
 
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
@@ -27,10 +29,9 @@ services:
           subpath: exins/priv
 
   db:
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: exins_dev
+    env_file:
+      - .env.dev
+      - .env
     hostname: host.exins
     image: postgres:18
     # network_mode: service:app
@@ -43,12 +44,12 @@ services:
           subpath: 18/data
 
   pgAdmin:
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=sarin.rajendran@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=7evenT9!ne
+    env_file:
+      - .env.dev
+      - .env
     image: dpage/pgadmin4
     ports:
-      - 5555:80
+      - "${PGADMIN_LISTEN_PORT:-5050}:80"
     restart: unless-stopped
     volumes:
       - type: volume
@@ -58,10 +59,12 @@ services:
           subpath: pgadmin4/config_local.py
 
   livebook:
+    env_file:
+      - .env.dev
+      - .env
     environment:
-      - LIVEBOOK_DEFAULT_RUNTIME=attached:app-node-1@host.exins:exins-cookie
+      - LIVEBOOK_DEFAULT_RUNTIME=attached:app-node-1@host.exins:${RELEASE_COOKIE}
       - LIVEBOOK_DISTRIBUTION=exins
-      - LIVEBOOK_PASSWORD=new passwordW@!
     image: ghcr.io/livebook-dev/livebook
     network_mode: service:db
     restart: unless-stopped 
