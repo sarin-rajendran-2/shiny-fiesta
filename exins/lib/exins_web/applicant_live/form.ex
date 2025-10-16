@@ -1,4 +1,7 @@
 defmodule ExinsWeb.ApplicantLive.Form do
+  @moduledoc """
+  This LiveView provides a form for creating and updating applicant records.
+  """
   use ExinsWeb, :live_view
 
   @impl true
@@ -56,12 +59,19 @@ defmodule ExinsWeb.ApplicantLive.Form do
   defp return_to("show"), do: "show"
   defp return_to(_), do: "index"
 
+  @doc """
+  Handles the form validation event.
+  """
   @impl true
   def handle_event("validate", %{"applicant" => applicant_params}, socket) do
     {:noreply,
      assign(socket, form: AshPhoenix.Form.validate(socket.assigns.form, applicant_params))}
   end
 
+  @doc """
+  Handles the form submission event.
+  """
+  @impl true
   def handle_event("save", %{"applicant" => applicant_params}, socket) do
     case AshPhoenix.Form.submit(socket.assigns.form, params: applicant_params) do
       {:ok, applicant} ->

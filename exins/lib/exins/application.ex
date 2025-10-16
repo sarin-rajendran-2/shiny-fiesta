@@ -1,10 +1,27 @@
 defmodule Exins.Application do
-  # See https://hexdocs.pm/elixir/Application.html
-  # for more information on OTP Applications
-  @moduledoc false
+  @moduledoc """
+  The Exins application is the main entry point for the OTP application.
+
+  It is responsible for starting the supervision tree, which includes
+  the endpoint, the database repository, and the pubsub system.
+  """
 
   use Application
 
+  @doc """
+  Starts the Exins application.
+
+  This function is called when the application is started and is responsible
+  for creating the supervision tree.
+
+  ## Parameters
+    - `_type`: The type of start.
+    - `_args`: A list of arguments.
+
+  ## Returns
+    - `{:ok, pid}` on success, where `pid` is the process identifier of the supervisor.
+    - `{:error, reason}` on failure.
+  """
   @impl true
   def start(_type, _args) do
     children = [
@@ -24,8 +41,20 @@ defmodule Exins.Application do
     Supervisor.start_link(children, opts)
   end
 
-  # Tell Phoenix to update the endpoint configuration
-  # whenever the application is updated.
+  @doc """
+  Handles application configuration changes.
+
+  This function is called by Phoenix whenever the application's configuration
+  is updated.
+
+  ## Parameters
+    - `changed`: A keyword list of changed configuration.
+    - `_new`: A keyword list of new configuration.
+    - `removed`: A list of removed configuration keys.
+
+  ## Returns
+    - `:ok`
+  """
   @impl true
   def config_change(changed, _new, removed) do
     ExinsWeb.Endpoint.config_change(changed, removed)

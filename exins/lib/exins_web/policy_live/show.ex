@@ -1,4 +1,7 @@
 defmodule ExinsWeb.PolicyLive.Show do
+  @moduledoc """
+  This LiveView displays the details of a single policy.
+  """
   use ExinsWeb, :live_view
 
   @impl true

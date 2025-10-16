@@ -1,4 +1,11 @@
 defmodule ExinsWeb.Router do
+  @moduledoc """
+  The ExinsWeb.Router module defines the routes for the application.
+
+  It sets up pipelines for browser and API requests, and defines scopes
+  for different parts of the application. It also includes development-only
+  routes for the LiveDashboard and Swoosh mailbox preview.
+  """
   use ExinsWeb, :router
 
   pipeline :browser do

@@ -1,4 +1,7 @@
 defmodule ExinsWeb.ContactLive.Index do
+  @moduledoc """
+  This LiveView lists all contacts and provides actions to create, edit, and delete them.
+  """
   use ExinsWeb, :live_view
 
   @impl true

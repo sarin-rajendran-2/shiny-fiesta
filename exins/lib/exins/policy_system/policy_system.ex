@@ -1,4 +1,7 @@
 defmodule Exins.PolicySystem do
+  @moduledoc """
+  The Exins.PolicySystem domain contains resources related to insurance policies.
+  """
   use Ash.Domain
 
   resources do
@@ -10,6 +13,7 @@ defmodule Exins.PolicySystem do
       define :destroy_policy, action: :destroy
       define :get_policy, args: [:id], action: :by_id
     end
+
     resource Exins.PolicySystem.Applicant
   end
 end

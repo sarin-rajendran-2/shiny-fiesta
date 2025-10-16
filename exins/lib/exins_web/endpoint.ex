@@ -1,4 +1,10 @@
 defmodule ExinsWeb.Endpoint do
+  @moduledoc """
+  The ExinsWeb.Endpoint module is the entry point for all web requests.
+
+  It defines the endpoint configuration, including session options, sockets,
+  static file serving, code reloading, and the plug pipeline.
+  """
   use Phoenix.Endpoint, otp_app: :exins
 
   # The session will be stored in the cookie and signed,

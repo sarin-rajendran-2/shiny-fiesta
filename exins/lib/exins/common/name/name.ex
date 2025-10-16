@@ -1,11 +1,15 @@
 defmodule Exins.Common.Name do
   @moduledoc """
-  The Name resource.
+  The Name resource represents a name, which can be for an individual or an organization.
+
+  It is an embedded resource, meaning it is not stored in its own table
+  but is embedded within other resources.
   """
 
   use Ash.Resource,
-  data_layer: :embedded,
-  embed_nil_values?: false
+    data_layer: :embedded,
+    embed_nil_values?: false
+
   alias Exins.Common.FullNameCalculation
 
   actions do
