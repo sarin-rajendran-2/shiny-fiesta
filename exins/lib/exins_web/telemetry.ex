@@ -1,7 +1,17 @@
 defmodule ExinsWeb.Telemetry do
+  @moduledoc """
+  The ExinsWeb.Telemetry module defines the Telemetry supervisor and metrics.
+
+  It is responsible for starting the Telemetry poller and defining the
+  metrics that are collected for the application, including Phoenix, database,
+  and VM metrics.
+  """
   use Supervisor
   import Telemetry.Metrics
 
+  @doc """
+  Starts the Telemetry supervisor.
+  """
   def start_link(arg) do
     Supervisor.start_link(__MODULE__, arg, name: __MODULE__)
   end
@@ -19,6 +29,9 @@ defmodule ExinsWeb.Telemetry do
     Supervisor.init(children, strategy: :one_for_one)
   end
 
+  @doc """
+  Returns a list of Telemetry metrics for the application.
+  """
   def metrics do
     [
       # Phoenix Metrics

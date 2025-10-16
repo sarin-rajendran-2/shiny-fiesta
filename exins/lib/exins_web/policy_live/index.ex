@@ -1,4 +1,7 @@
 defmodule ExinsWeb.PolicyLive.Index do
+  @moduledoc """
+  This LiveView lists all policies and provides actions to create, edit, and delete them.
+  """
   use ExinsWeb, :live_view
 
   @impl true

@@ -1,11 +1,14 @@
 defmodule Exins.Common.Phone do
   @moduledoc """
-  The Phone resource.
+  The Phone resource represents a phone number.
+
+  It is an embedded resource, meaning it is not stored in its own table
+  but is embedded within other resources.
   """
 
   use Ash.Resource,
-  data_layer: :embedded,
-  embed_nil_values?: false
+    data_layer: :embedded,
+    embed_nil_values?: false
 
   actions do
     defaults [:destroy, :read, create: :*, update: :*]
@@ -18,7 +21,9 @@ defmodule Exins.Common.Phone do
   end
 
   calculations do
-    calculate :full_phone_number, :string, expr("+" <> number_parts[:country_code] <> number_parts[:phone_number])
+    calculate :full_phone_number,
+              :string,
+              expr("+" <> number_parts[:country_code] <> number_parts[:phone_number])
   end
 
   preparations do

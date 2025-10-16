@@ -1,4 +1,7 @@
 defmodule ExinsWeb.ContactLive.Show do
+  @moduledoc """
+  This LiveView displays the details of a single contact.
+  """
   use ExinsWeb, :live_view
 
   @impl true

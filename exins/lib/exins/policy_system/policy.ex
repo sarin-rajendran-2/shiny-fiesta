@@ -1,12 +1,13 @@
 defmodule Exins.PolicySystem.Policy do
+  @moduledoc """
+  Represents an insurance policy.
+  """
+
   use Ash.Resource,
     domain: Exins.PolicySystem,
     data_layer: AshPostgres.DataLayer
     # authorizers: [Ash.Policy.Authorizer]
 
-  @doc """
-  Represents an insurance policy.
-  """
   alias Exins.PolicySystem.Applicant
   alias Exins.PolicySystem.PolicyDocument
 
@@ -24,16 +25,17 @@ defmodule Exins.PolicySystem.Policy do
       change fn changeset, _context ->
         changeset
         |> Ash.Changeset.change_new_attribute_lazy(:expiry_date, fn ->
-          effectiveDate = case changeset |> Ash.Changeset.get_attribute(:effective_date) do
-            nil -> Date.utc_today()
-            someDate -> someDate
-          end
+          effectiveDate =
+            case changeset |> Ash.Changeset.get_attribute(:effective_date) do
+              nil -> Date.utc_today()
+              someDate -> someDate
+            end
+
           Date.shift(effectiveDate, @default_term)
         end)
       end
 
       change set_context(%{line_of_business: arg(:line_of_business)})
-
       change manage_relationship(:applicant, :applicant, type: :create)
     end
 
@@ -51,25 +53,30 @@ defmodule Exins.PolicySystem.Policy do
 
   attributes do
     uuid_v7_primary_key :id
+
     attribute :seq_number, :integer do
       allow_nil? false
       generated? true
       public? false
     end
+
     attribute :effective_date, :date do
       allow_nil? false
       default &Date.utc_today/0
       public? true
     end
+
     attribute :expiry_date, :date do
       allow_nil? false
       public? true
     end
+
     attribute :line_of_business, :atom do
       allow_nil? false
       constraints [one_of: @lines_of_business]
       public? true
     end
+
     attribute :status, :atom do
       public? true
       description "The status of the policy"
@@ -77,6 +84,7 @@ defmodule Exins.PolicySystem.Policy do
       default :quote
       allow_nil? false
     end
+
     # Embedded resource named `Doc` (PolicyDocument)
     attribute :doc, PolicyDocument do
       public? true
@@ -87,7 +95,11 @@ defmodule Exins.PolicySystem.Policy do
   end
 
   calculations do
-    calculate :policy_number, :ci_string, expr(fragment("concat(?, lpad(CAST(seq_number AS TEXT), 8, '0'))", type("POL", :string)))
+    calculate :policy_number,
+              :ci_string,
+              expr(
+                fragment("concat(?, lpad(CAST(seq_number AS TEXT), 8, '0'))", type("POL", :string))
+              )
   end
 
   identities do
@@ -111,6 +123,6 @@ defmodule Exins.PolicySystem.Policy do
   end
 
   validations do
-      validate compare(:expiry_date, greater_than_or_equal_to: :effective_date)
+    validate compare(:expiry_date, greater_than_or_equal_to: :effective_date)
   end
 end

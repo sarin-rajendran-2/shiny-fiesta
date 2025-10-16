@@ -1,11 +1,11 @@
 defmodule Exins.PolicySystem.Applicant do
-  use Ash.Resource,
-  domain: Exins.PolicySystem,
-  data_layer: AshPostgres.DataLayer
-
   @moduledoc """
-  The Applicant resource.
+  The Applicant resource represents an applicant for an insurance policy.
   """
+
+  use Ash.Resource,
+    domain: Exins.PolicySystem,
+    data_layer: AshPostgres.DataLayer
 
   require Ash.Query
   alias Exins.Common.{Address, Contact, PracticeLocationCalculation}
@@ -21,22 +21,27 @@ defmodule Exins.PolicySystem.Applicant do
 
       change manage_relationship(:contact_id, :contact, on_lookup: :relate, on_no_match: :error)
 
-      change after_action(fn changeset, record, context ->
-        practice_location = changeset
-        |> Ash.Changeset.get_argument(:practice_location)
-        practice_address = %{
-          tags: ["Practice Location"],
-          address_parts: practice_location
-        }
+      change after_action(
+               fn changeset, record, _context ->
+                 practice_location =
+                   changeset
+                   |> Ash.Changeset.get_argument(:practice_location)
 
-        Exins.Common.Contact
-        |> Ash.get!(record.contact_id)
-        |> Ash.read_one!()
-        |> Ash.Changeset.for_update(:update, %{addresses: [practice_address]})
-        |> Ash.update!()
+                 practice_address = %{
+                   tags: ["Practice Location"],
+                   address_parts: practice_location
+                 }
 
-        {:ok, record}
-      end), where: [argument_equals(:line_of_business, :medical_indemnity)]
+                 Exins.Common.Contact
+                 |> Ash.get!(record.contact_id)
+                 |> Ash.read_one!()
+                 |> Ash.Changeset.for_update(:update, %{addresses: [practice_address]})
+                 |> Ash.update!()
+
+                 {:ok, record}
+               end,
+               where: [argument_equals(:line_of_business, :medical_indemnity)]
+             )
     end
   end
 
@@ -64,6 +69,7 @@ defmodule Exins.PolicySystem.Applicant do
   end
 
   validations do
-    validate present(:practice_location), where: [argument_equals(:line_of_business, :medical_indemnity)]
+    validate present(:practice_location),
+             where: [argument_equals(:line_of_business, :medical_indemnity)]
   end
 end

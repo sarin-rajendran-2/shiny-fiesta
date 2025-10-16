@@ -1,10 +1,17 @@
 defmodule Exins.PolicySystem.PolicyDocument do
+  @moduledoc """
+  Represents a detailed policy document.
+
+  It is an embedded resource, meaning it is not stored in its own table
+  but is embedded within other resources, typically a `Policy`.
+  """
+
   use Ash.Resource,
-  domain: Exins.PolicySystem,
-  data_layer: :embedded
+    domain: Exins.PolicySystem,
+    data_layer: :embedded
 
   @doc """
-  Represents a detailed policy document.
+  Returns the default policy term in days.
   """
   def default_term, do: 365
 
@@ -75,7 +82,7 @@ defmodule Exins.PolicySystem.PolicyDocument do
   end
 
   calculations do
-
+    # This is an embedded resource, so calculations are not typically defined here.
+    # They would be defined on the resource that embeds this one.
   end
-
 end

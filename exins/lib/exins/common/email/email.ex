@@ -1,11 +1,14 @@
 defmodule Exins.Common.Email do
   @moduledoc """
-  The Email resource.
+  The Email resource represents an email address.
+
+  It is an embedded resource, meaning it is not stored in its own table
+  but is embedded within other resources.
   """
 
   use Ash.Resource,
-  data_layer: :embedded,
-  embed_nil_values?: false
+    data_layer: :embedded,
+    embed_nil_values?: false
 
   actions do
     defaults [:destroy, :read, create: :*, update: :*]

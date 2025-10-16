@@ -1,7 +1,10 @@
 defmodule Exins.Common.Address do
   alias Exins.Common.FullAddressCalculation
   @moduledoc """
-  The Address resource.
+  The Address resource represents a physical address.
+
+  It is an embedded resource, meaning it is not stored in its own table
+  but is embedded within other resources.
   """
 
   use Ash.Resource,

@@ -1,4 +1,7 @@
 defmodule ExinsWeb.PolicyLive.Form do
+  @moduledoc """
+  This LiveView provides a form for creating and updating policy records.
+  """
   use ExinsWeb, :live_view
 
   @impl true
@@ -104,11 +107,18 @@ defmodule ExinsWeb.PolicyLive.Form do
   defp return_to("show"), do: "show"
   defp return_to(_), do: "index"
 
+  @doc """
+  Handles the form validation event.
+  """
   @impl true
   def handle_event("validate", %{"policy" => policy_params}, socket) do
     {:noreply, assign(socket, form: AshPhoenix.Form.validate(socket.assigns.form, policy_params))}
   end
 
+  @doc """
+  Handles the form submission event.
+  """
+  @impl true
   def handle_event("save", %{"policy" => policy_params}, socket) do
     case AshPhoenix.Form.submit(socket.assigns.form, params: policy_params) do
       {:ok, policy} ->

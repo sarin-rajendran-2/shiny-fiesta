@@ -1,4 +1,7 @@
 defmodule ExinsWeb.ContactLive.Form do
+  @moduledoc """
+  This LiveView provides a form for creating and updating contact records.
+  """
   use ExinsWeb, :live_view
 
   @impl true
@@ -82,12 +85,19 @@ defmodule ExinsWeb.ContactLive.Form do
   defp return_to("show"), do: "show"
   defp return_to(_), do: "index"
 
+  @doc """
+  Handles the form validation event.
+  """
   @impl true
   def handle_event("validate", %{"contact" => contact_params}, socket) do
     {:noreply,
      assign(socket, form: AshPhoenix.Form.validate(socket.assigns.form, contact_params))}
   end
 
+  @doc """
+  Handles the form submission event.
+  """
+  @impl true
   def handle_event("save", %{"contact" => contact_params}, socket) do
     case AshPhoenix.Form.submit(socket.assigns.form, params: contact_params) do
       {:ok, contact} ->

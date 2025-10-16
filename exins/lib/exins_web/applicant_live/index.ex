@@ -1,4 +1,7 @@
 defmodule ExinsWeb.ApplicantLive.Index do
+  @moduledoc """
+  This LiveView lists all applicants and provides actions to create, edit, and delete them.
+  """
   use ExinsWeb, :live_view
 
   @impl true
